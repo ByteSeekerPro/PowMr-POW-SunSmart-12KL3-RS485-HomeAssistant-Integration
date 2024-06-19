@@ -12,14 +12,13 @@ What do you need?
 Hardware
 - 1 x ESP32 NodeMCU https://amzn.to/45ssngF
 - 1 x TTL to RS485 Converter https://amzn.to/4c6Vhpd
-- 1 x LAN Kabel RJ45
+- 1 x LAN Cable RJ45 (only a half of this)
 
 Software
 - HomeAssistant
 - ESPHome as HomeAssistant Integration
 
 Instead of the WiFi dongle, this adapter based on an ESP32 is connected to the WiFi interface of the inverter.
-
 
 ESP32 WROOM Pinout (38 Pin)
 
@@ -45,5 +44,6 @@ PowMr Inverter Wifi Port / RS485
 
 ![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/b7228ac0-712f-4562-a4b0-f1323dc0dc91)
 
+Wiring Diagram
 
-
+![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/031dbd1f-dd53-4e15-82ca-ec6fbc270b3f)
