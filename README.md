@@ -27,8 +27,8 @@ ESP is powered over USB.
 Pins used:
 - 3V3 - VCC (TTL to RS485)
 - GND - GND (TTL to RS485)
-- GPIO16 (RX2) - RXD (TTL to RS485)
-- GPIO17 (TX2) - TXD (TTL to RS485)
+- GPIO16 (RX2) - TXD (TTL to RS485)
+- GPIO17 (TX2) - RXD (TTL to RS485)
 
 ![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/89d6227d-ca61-4aeb-9a73-7d3ea7fd3665)
 
