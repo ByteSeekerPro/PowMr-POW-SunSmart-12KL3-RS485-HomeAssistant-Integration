@@ -21,4 +21,5 @@ Software
 Instead of the WiFi dongle, this adapter based on an ESP32 is connected to the WiFi interface of the inverter.
 
 ESP32 WROOM Pinout (38 Pin)
-![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/509ef51a-8908-487a-8a97-6ee3cb7c5a6b)
+![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/08f22cf4-c0de-4090-b2e6-3927bdd1477c)
+
