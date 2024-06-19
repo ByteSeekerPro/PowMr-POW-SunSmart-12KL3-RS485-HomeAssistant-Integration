@@ -46,4 +46,5 @@ PowMr Inverter Wifi Port / RS485
 
 Wiring Diagram
 
-![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/031dbd1f-dd53-4e15-82ca-ec6fbc270b3f)
+![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/d31c9d7d-cf2c-4d49-8648-69220d60f019)
+
