@@ -20,7 +20,10 @@ Software
 
 Instead of the WiFi dongle, this adapter based on an ESP32 is connected to the WiFi interface of the inverter.
 
+
 ESP32 WROOM Pinout (38 Pin)
+
+ESP is powered over USB.
 
 Pins used:
 - 3V3 - VCC (TTL to RS485)
@@ -31,6 +34,10 @@ Pins used:
 ![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/89d6227d-ca61-4aeb-9a73-7d3ea7fd3665)
 
 TTL to RS485 Converter
+
+Pins used:
+- A+ - Pin7 RJ45 Cable
+- B- - Pin8 RJ45 Cable
 
 ![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/e1120a85-f1ab-4ca5-85ef-10b266e50600)
 
