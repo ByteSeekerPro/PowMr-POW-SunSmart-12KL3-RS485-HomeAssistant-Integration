@@ -34,5 +34,9 @@ TTL to RS485 Converter
 
 ![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/e1120a85-f1ab-4ca5-85ef-10b266e50600)
 
+PowMr Inverter Wifi Port / RS485
+
+![image](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/b7228ac0-712f-4562-a4b0-f1323dc0dc91)
+
 
 
