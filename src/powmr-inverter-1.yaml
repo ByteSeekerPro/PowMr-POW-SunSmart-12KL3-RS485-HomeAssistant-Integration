@@ -1,0 +1,620 @@
+substitutions:
+  name: "powmr-inverter-1"
+  friendly_name: POWMR-INVERTER-1
+  short_name: "powmr1"
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.6.0
+  name_add_mac_suffix: false
+  project:
+    name: esphome.web
+    version: '1.0'
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: arduino
+
+logger:
+  # level: DEBUG
+
+api:
+  encryption:
+    key: "<YOUR-KEY>"
+
+ota:
+  - platform: esphome
+    password: "<YOUR-PASSWORD>"
+
+improv_serial:
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: ${friendly_name}
+    password: "<YOUR-PASSWORD>"
+
+captive_portal:
+
+uart:
+  id: mod_bus
+  tx_pin: ${tx_pin}
+  rx_pin: ${rx_pin}
+  baud_rate: 9600
+  data_bits: 8
+  parity: NONE
+  stop_bits: 1
+
+modbus:
+  id: modbus1
+  uart_id: mod_bus
+
+modbus_controller:
+ - id: powmr1
+   address: 0x01
+   modbus_id: modbus1
+   setup_priority: -10
+   update_interval: 15000ms
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_battery_soc
+    name: "Battery SOC"
+    address: 0x100
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 0
+    icon: mdi:percent
+    skip_updates: 1
+
+  #
+  # PV
+  #
+  # PV1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV1 Voltage"
+    id: ${short_name}_pv1_voltage
+    register_type: holding
+    address: 0x0107
+    unit_of_measurement: "V"
+    accuracy_decimals: 0
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1 
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV1 Current"
+    id: ${short_name}_pv1_current
+    register_type: holding
+    address: 0x0108
+    state_class: measurement
+    unit_of_measurement: A
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV1 Power"
+    id: ${short_name}_pv1_power
+    register_type: holding
+    address: 0x0109
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  # PV2
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV2 Voltage"
+    id: ${short_name}_pv2_voltage
+    register_type: holding
+    address: 0x10F
+    unit_of_measurement: "V"
+    accuracy_decimals: 0
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1 
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV2 Current"
+    id: ${short_name}_pv2_current
+    register_type: holding
+    address: 0x110
+    state_class: measurement
+    unit_of_measurement: A
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV2 Power"
+    id: ${short_name}_pv2_power
+    register_type: holding
+    address: 0x111
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  # Total PV Power
+  - platform: template
+    name: "Total PV Power"
+    id: ${short_name}_total_pv_power
+    unit_of_measurement: "W"
+    lambda: |-
+      return id(${short_name}_pv1_power).state + id(${short_name}_pv2_power).state;
+    update_interval: 10s
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+
+  #
+  # Grid
+  #
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Frequency"
+    id: ${short_name}_grid_freq
+    register_type: holding
+    address: 0x0215
+    unit_of_measurement: Hz
+    filters:
+      - multiply: 0.01
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Voltage L1"
+    id: ${short_name}_grid_voltage_l1
+    register_type: holding
+    address: 0x0213
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Current L1"
+    id: ${short_name}_grid_current_l1
+    register_type: holding
+    address: 0x0214
+    state_class: measurement
+    unit_of_measurement: A
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Voltage L2"
+    id: ${short_name}_grid_voltage_l2
+    register_type: holding
+    address: 0x022A
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Current L2"
+    id: ${short_name}_grid_current_l2
+    register_type: holding
+    address: 0x0238
+    state_class: measurement
+    unit_of_measurement: A
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Voltage L3"
+    id: ${short_name}_grid_voltage_l3
+    register_type: holding
+    address: 0x022B
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Grid Current L3"
+    id: ${short_name}_grid_current_l3
+    register_type: holding
+    address: 0x0239
+    state_class: measurement
+    unit_of_measurement: A
+    device_class: current
+    filters:
+      - multiply: 0.1
+
+  #
+  # Inverter
+  #
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Frequency"
+    id: ${short_name}_inverter_freq
+    register_type: holding
+    address: 0x218
+    unit_of_measurement: Hz
+    filters:
+      - multiply: 0.01
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Voltage L1"
+    id: ${short_name}_inverter_voltage_l1
+    register_type: holding
+    address: 0x216
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Current L1"
+    id: ${short_name}_inverter_current_l1
+    register_type: holding
+    address: 0x217
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Active Power L1"
+    id: ${short_name}_inverter_active_power_l1
+    register_type: holding
+    address: 0x21B
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Load Ratio L1"
+    id: ${short_name}_inverter_load_ratio_l1
+    register_type: holding
+    address: 0x21F
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Voltage L2"
+    id: ${short_name}_inverter_voltage_l2
+    register_type: holding
+    address: 0x22C
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Current L2"
+    id: ${short_name}_inverter_current_l2
+    register_type: holding
+    address: 0x22E
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Active Power L2"
+    id: ${short_name}_inverter_active_power_l2
+    register_type: holding
+    address: 0x232
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Load Ratio L2"
+    id: ${short_name}_inverter_load_ratio_l2
+    register_type: holding
+    address: 0x236
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Voltage L3"
+    id: ${short_name}_inverter_voltage_l3
+    register_type: holding
+    address: 0x22D
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Current L3"
+    id: ${short_name}_inverter_current_l3
+    register_type: holding
+    address: 0x22F
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Active Power L3"
+    id: ${short_name}_inverter_active_power_l3
+    register_type: holding
+    address: 0x233
+    unit_of_measurement: "W"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Load Ratio L3"
+    id: ${short_name}_inverter_load_ratio_l3
+    register_type: holding
+    address: 0x237
+    unit_of_measurement: "%"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  # Total Inverter Power
+  - platform: template
+    name: "Total Inverter Power"
+    id: ${short_name}_total_inverter_power
+    unit_of_measurement: "W"
+    lambda: |-
+      return id(${short_name}_inverter_active_power_l1).state + id(${short_name}_inverter_active_power_l2).state + id(${short_name}_inverter_active_power_l3).state;
+    update_interval: 10s
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_power_generation_current_day
+    name: "Power Generation Today"
+    address: 0xF02F
+    register_type: holding
+    value_type: U_WORD
+    skip_updates: 1 
+    accuracy_decimals: 2
+    icon: mdi:power
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.1   
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_power_consumption_current_day
+    name: "Power Consumption Today"
+    address: 0xF030
+    register_type: holding
+    value_type: U_WORD
+    skip_updates: 1 
+    accuracy_decimals: 2
+    icon: mdi:power
+    unit_of_measurement: "kWh"
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_total_number_operating_day
+    name: "Total Number Operating Days"
+    address: 0xF031
+    register_type: holding
+    value_type: U_WORD
+    skip_updates: 1 
+    accuracy_decimals: 0
+    icon: mdi:calendar-today
+  # Inverter Temperature
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter DCDC Temperature"
+    id: ${short_name}_inverter_dcdc_temperature
+    register_type: holding
+    address: 0x220
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter DCAC Temperature"
+    id: ${short_name}_inverter_dcac_temperature
+    register_type: holding
+    address: 0x221
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Translator Temperature"
+    id: ${short_name}_inverter_translator_temperature
+    register_type: holding
+    address: 0x222
+    unit_of_measurement: "°C"
+    accuracy_decimals: 0
+    device_class: power
+    state_class: measurement
+    filters:
+      - multiply: 0.1
+  # RW Register - ToDo: write to register
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Float Charge Voltage"
+    id: ${short_name}_inverter_float_charge_voltage
+    register_type: holding
+    address: 0xE009
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.4
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Charge Limit Voltage"
+    id: ${short_name}_inverter_charge_limit_voltage
+    register_type: holding
+    address: 0xE006
+    unit_of_measurement: "V"
+    accuracy_decimals: 1
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.4
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "PV Maximum Charging Current"
+    id: ${short_name}_maximum_charging_current
+    register_type: holding
+    address: 0xE001
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 0
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Grid Maximum Charging Current"
+    id: ${short_name}_inverter_grid_maximum_charging_current
+    register_type: holding
+    address: 0xE205
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 0
+    device_class: current
+    filters:
+      - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Inverter Maximum Charging Current"
+    id: ${short_name}_inverter_maximum_charging_current
+    register_type: holding
+    address: 0xE20A
+    state_class: measurement
+    unit_of_measurement: A
+    accuracy_decimals: 0
+    device_class: current
+    filters:
+      - multiply: 0.1
+
+  #
+  # Battery
+  #
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Battery Voltage"
+    id: ${short_name}_battery_voltage
+    register_type: holding
+    address: 0x0101
+    unit_of_measurement: "V"
+    accuracy_decimals: 2
+    device_class: Voltage
+    state_class: measurement
+    filters:
+      - multiply: 0.1  
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Battery Current"
+    id: ${short_name}_battery_current
+    register_type: holding
+    value_type: U_WORD
+    skip_updates: 1 
+    address: 0x0102
+    icon: mdi:current-dc
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: current
+    filters:
+      - multiply: -0.1
+  # - platform: template
+  #   name: "Battery SOC"
+  #   id: ${short_name}_battery_soc
+  #   unit_of_measurement: "%"
+  #   lambda: |-
+  #     float voltage = id(${short_name}_battery_voltage).state;
+  #     if (voltage >= 54.0) { return 100.0;} else if (voltage >= 53.5) { return 95.0; } else if (voltage >= 53.0) { return 90.0; }
+  #     else if (voltage >= 52.5) { return 85.0; } else if (voltage >= 52.0) { return 80.0; } 
+  #     else if (voltage >= 51.5) { return 75.0; } else if (voltage >= 51.0) { return 70.0; }
+  #     else if (voltage >= 50.5) { return 65.0; } else if (voltage >= 50.0) { return 60.0; }
+  #     else if (voltage >= 49.5) { return 55.0; } else if (voltage >= 49.0) { return 50.0; }
+  #     else if (voltage >= 48.5) { return 45.0; } else if (voltage >= 48.0) { return 40.0; }
+  #     else if (voltage >= 47.5) { return 35.0; } else if (voltage >= 47.0) { return 30.0; }
+  #     else if (voltage >= 46.5) { return 25.0; } else if (voltage >= 46.0) { return 20.0; }
+  #     else if (voltage >= 45.5) { return 15.0; } else if (voltage >= 45.0) { return 10.0; }
+  #     else if (voltage >= 44.5) { return 5.0; } else { return 0.0; }
+  #   update_interval: 60s
+  #   device_class: battery
+  #   state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Battery Charge Today"
+    id: ${short_name}_battery_charge_today
+    register_type: holding
+    address: 0xF02D
+    unit_of_measurement: "Ah"
+    accuracy_decimals: 0
+    device_class: energy
+    state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    name: "Battery Discharge Today"
+    id: ${short_name}_battery_discharge_today
+    register_type: holding
+    address: 0xF02E
+    unit_of_measurement: "Ah"
+    accuracy_decimals: 0
+    device_class: energy
+    state_class: measurement
+
+select:
+  # Inverter Settings
+  - platform: modbus_controller
+    name: "Buzzer Alarm"
+    optimistic: true
+    address: 0xE210
+    value_type: U_WORD
+    optionsmap:
+      "Off": 0
+      "On": 1
+  - platform: modbus_controller
+    name: "Output Source Priority"
+    optimistic: true
+    address: 0xE204
+    value_type: U_WORD
+    optionsmap:
+      "Solar-Utility-Battery (SUB)": 0
+      "Utility-Solar-Battery (USB)": 1
+      "Solar-Battery-Utility (SBU)": 2 
