@@ -1,6 +1,6 @@
 PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration
 
-HomeAssistant ESPHome / RS485 Integration for all Inverters of the type
+HomeAssistant ESPHome / RS485 Modbus Integration for all Inverters of the type
 - POW-SunSmart 8KL3
 - POW-SunSmart 10KL3
 - POW-SunSmart 12KL3 - tested with this one
