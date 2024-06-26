@@ -1,4 +1,6 @@
-!!! This repository is currently being set up !!! 
+!!! This repository is currently being set up !!!
+
+The yaml file is in progress... :-)
 
 PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration
 
