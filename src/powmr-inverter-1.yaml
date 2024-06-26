@@ -63,22 +63,9 @@ modbus_controller:
    update_interval: 15000ms
 
 sensor:
-  - platform: modbus_controller
-    modbus_controller_id: powmr1
-    id: ${short_name}_battery_soc
-    name: "Battery SOC"
-    address: 0x100
-    unit_of_measurement: "%"
-    register_type: holding
-    value_type: U_WORD
-    accuracy_decimals: 0
-    icon: mdi:percent
-    skip_updates: 1
-
-  #
-  # PV
   #
   # PV1
+  #
   - platform: modbus_controller
     modbus_controller_id: powmr1
     name: "PV1 Voltage"
@@ -578,6 +565,17 @@ sensor:
   #   update_interval: 60s
   #   device_class: battery
   #   state_class: measurement
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_battery_soc
+    name: "Battery SOC"
+    address: 0x100
+    unit_of_measurement: "%"
+    register_type: holding
+    value_type: U_WORD
+    accuracy_decimals: 0
+    icon: mdi:percent
+    skip_updates: 1
   - platform: modbus_controller
     modbus_controller_id: powmr1
     name: "Battery Charge Today"
