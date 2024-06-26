@@ -12,7 +12,7 @@ HomeAssistant ESPHome / RS485 Integration for all Inverters of the type
 What do you need?
 
 Hardware
-- 1 x ESP32 NodeMCU https://amzn.to/45ssngF
+- 1 x ESP32 NodeMCU https://amzn.to/45ssngF or ESP32 NodeMCU with external antenna https://amzn.to/3RLFtjz
 - 1 x TTL to RS485 Converter https://amzn.to/4c6Vhpd
 - 1 x LAN Cable RJ45 (only a half of this)
 
