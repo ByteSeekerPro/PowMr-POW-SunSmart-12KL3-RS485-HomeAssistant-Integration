@@ -51,5 +51,5 @@ Wiring Diagram
 
 Fully assembled
 
-![ESP_2](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/a12b9439-9464-417b-a441-f6ff9f8dbaa5)
-![ESP_3](https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/78d0bb03-6fe4-405e-86eb-9a2feb9b1d3b)
+<img src="https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/a12b9439-9464-417b-a441-f6ff9f8dbaa5" alt="ESP_1" width="50%">
+<img src="https://github.com/ByteSeekerPro/PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration/assets/173205372/78d0bb03-6fe4-405e-86eb-9a2feb9b1d3b" alt="ESP_2" width="50%">
