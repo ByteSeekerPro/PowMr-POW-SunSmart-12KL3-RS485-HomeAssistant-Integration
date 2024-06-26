@@ -23,7 +23,7 @@ Software
 - HomeAssistant
 - ESPHome as HomeAssistant Integration
 
-Instead of the WiFi dongle, this adapter based on an ESP32 is connected to the WiFi interface of the inverter.
+This adapter, based on an ESP32, can be connected to the WiFi or RS485 interface of the inverter.
 
 ESP32 WROOM Pinout (38 Pin)
 
