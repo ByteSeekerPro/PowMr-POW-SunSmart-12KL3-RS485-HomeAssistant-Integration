@@ -1,7 +1,5 @@
-PowMr-POW-SunSmart-12KL3-RS485-HomeAssistant-Integration
-
 HomeAssistant ESPHome / RS485 Modbus Integration  
-Maybe for all Inverters of the following types (used with PowMr Wifi Module - Wi-Fi Plug07/WIFI-HF - SRNE MS-W 09)
+Maybe for all Inverters of the following types / PowMr Wifi Module - Wi-Fi Plug07/WIFI-HF - SRNE MS-W 09
 - POW-LVM3K-24V
 - POW-LVM3.5K-48V
 - POW-LVM5K-48V-H
