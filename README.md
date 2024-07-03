@@ -1,5 +1,5 @@
 HomeAssistant ESPHome / RS485 Modbus Integration  
-Maybe for all Inverters of the following types / PowMr Wifi Module - Wi-Fi Plug07/WIFI-HF - SRNE MS-W 09
+Maybe for all Inverters of the following types
 - POW-LVM3K-24V
 - POW-LVM3.5K-48V
 - POW-LVM5K-48V-H
@@ -12,9 +12,11 @@ Maybe for all Inverters of the following types / PowMr Wifi Module - Wi-Fi Plug0
 - POW-SUNSMART-5.5KW-48V
 - POW-SUNSMART-3.5KW-48V
 
-- some SRNE X3 Models - I don't know the models, but they should also work because the MODBUS communication protocol documentation I used is from SRNE.
+- some SRNE X3 Models - I don't know the models, but they should also work because the MODBUS communication protocol documentation I used is from SRNE.  
 
-What do you need?
+Usually used with PowMr Wifi Module - Wi-Fi Plug07/WIFI-HF - SRNE MS-W 09  
+
+What do you need?  
 
 Hardware
 - 1 x ESP32 NodeMCU https://amzn.to/45ssngF or ESP32 NodeMCU with external antenna https://amzn.to/3RLFtjz
