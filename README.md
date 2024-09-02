@@ -3,7 +3,7 @@ Maybe for all Inverters of the following types
 - POW-LVM3K-24V
 - POW-LVM3.5K-48V
 - POW-LVM5K-48V-H
-- POW-HPM5.6KW
+- POW-HPM5.6KW - tested (by https://github.com/Smoria)
 - POW-SunSmart SP5K
 - POW-SUNSMART 10K
 - POW-SunSmart 10KP
