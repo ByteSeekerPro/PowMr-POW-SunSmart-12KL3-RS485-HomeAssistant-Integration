@@ -596,6 +596,131 @@ sensor:
     accuracy_decimals: 0
     device_class: energy
     state_class: measurement
+  - platform: modbus_controller
+    name: "Fault Code 1"
+    id: ${short_name}_Fault_Code1
+    address: 0x204
+    value_type: U_WORD
+    register_type: holding
+    entity_category: diagnostic
+  - platform: modbus_controller
+    name: "Fault Code 2"
+    id: ${short_name}_Fault_Code2
+    address: 0x205
+    value_type: U_WORD
+    register_type: holding
+    entity_category: diagnostic
+
+text_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_fault1_text
+    bitmask: 0
+    register_type: holding
+    address: 0x204
+    raw_encode: HEXBYTES
+    name: ${short_name} Fault 1 (Text)
+    entity_category: diagnostic
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      std::string response = to_string("");
+      switch (value) {
+        case 1: return std::string("Code " + x + " : BatVoltLow");
+        case 2: return std::string("Code " + x + " : BatOverCurrSw");
+        case 3: return std::string("Code " + x + " : BatOpen");
+        case 4: return std::string("Code " + x + " : BatLowEod");
+        case 5: return std::string("Code " + x + " : BatOverCurrHw");
+        case 6: return std::string("Code " + x + " : BatOverVolt");
+        case 7: return std::string("Code " + x + " : BusOverVoltHw");
+        case 8: return std::string("Code " + x + " : BusOverVoltSw");
+        case 9: return std::string("Code " + x + " : PvVoltHigh");
+        case 10: return std::string("Code " + x + " : PvBoostOCSw");
+        case 11: return std::string("Code " + x + " : PvBoostOCHw");
+        case 12: return std::string("Code " + x + " : SpiCommErr");
+        case 13: return std::string("Code " + x + " : OverloadBypass");
+        case 14: return std::string("Code " + x + " : OverloadInverter");
+        case 15: return std::string("Code " + x + " : AcOverCurrHw");
+        case 16: return std::string("Code " + x + " : AuxDSpReqOffPWM");
+        case 17: return std::string("Code " + x + " : InvShort");
+        case 18: return std::string("Code " + x + " : Bussoftfailed");
+        case 19: return std::string("Code " + x + " : OverTemperMppt");
+        case 20: return std::string("Code " + x + " : OverTemperInv");
+        case 21: return std::string("Code " + x + " : FanFail");
+        case 22: return std::string("Code " + x + " : EEPROM");
+        case 23: return std::string("Code " + x + " : ModelNumErr");
+        case 24: return std::string("Code " + x + " : Busdiff");
+        case 25: return std::string("Code " + x + " : BusShort");
+        case 26: return std::string("Code " + x + " : Rlyshort");
+        case 28: return std::string("Code " + x + " : LinePhaseErr");
+        case 29: return std::string("Code " + x + " : BusVoltLow");
+        case 30: return std::string("Code " + x + " : BatCapacityLow1");
+        case 31: return std::string("Code " + x + " : BatCapacityLow2");
+        case 32: return std::string("Code " + x + " : BatCapacityLowStop");
+        case 58: return std::string("Code " + x + " : BMSComErr");
+        case 59: return std::string("Code " + x + " : BMSErr");
+        case 60: return std::string("Code " + x + " : BMSUnderTem");
+        case 61: return std::string("Code " + x + " : BMSOverTem");
+        case 62: return std::string("Code " + x + " : BMSOverCur");
+        case 63: return std::string("Code " + x + " : BMSUnderVolt");
+        case 64: return std::string("Code " + x + " : BMSOverVolt");
+        default: return std::string("No Error");
+      }      
+      return x;
+
+  - platform: modbus_controller
+    modbus_controller_id: powmr1
+    id: ${short_name}_fault2_text
+    bitmask: 0
+    register_type: holding
+    address: 0x205
+    raw_encode: HEXBYTES
+    name: ${short_name} Fault 2 (Text)
+    entity_category: diagnostic
+    lambda: |-
+      uint16_t value = modbus_controller::word_from_hex_str(x, 0);
+      std::string response = to_string("");
+      switch (value) {
+        case 1: return std::string("Code " + x + " : BatVoltLow");
+        case 2: return std::string("Code " + x + " : BatOverCurrSw");
+        case 3: return std::string("Code " + x + " : BatOpen");
+        case 4: return std::string("Code " + x + " : BatLowEod");
+        case 5: return std::string("Code " + x + " : BatOverCurrHw");
+        case 6: return std::string("Code " + x + " : BatOverVolt");
+        case 7: return std::string("Code " + x + " : BusOverVoltHw");
+        case 8: return std::string("Code " + x + " : BusOverVoltSw");
+        case 9: return std::string("Code " + x + " : PvVoltHigh");
+        case 10: return std::string("Code " + x + " : PvBoostOCSw");
+        case 11: return std::string("Code " + x + " : PvBoostOCHw");
+        case 12: return std::string("Code " + x + " : SpiCommErr");
+        case 13: return std::string("Code " + x + " : OverloadBypass");
+        case 14: return std::string("Code " + x + " : OverloadInverter");
+        case 15: return std::string("Code " + x + " : AcOverCurrHw");
+        case 16: return std::string("Code " + x + " : AuxDSpReqOffPWM");
+        case 17: return std::string("Code " + x + " : InvShort");
+        case 18: return std::string("Code " + x + " : Bussoftfailed");
+        case 19: return std::string("Code " + x + " : OverTemperMppt");
+        case 20: return std::string("Code " + x + " : OverTemperInv");
+        case 21: return std::string("Code " + x + " : FanFail");
+        case 22: return std::string("Code " + x + " : EEPROM");
+        case 23: return std::string("Code " + x + " : ModelNumErr");
+        case 24: return std::string("Code " + x + " : Busdiff");
+        case 25: return std::string("Code " + x + " : BusShort");
+        case 26: return std::string("Code " + x + " : Rlyshort");
+        case 28: return std::string("Code " + x + " : LinePhaseErr");
+        case 29: return std::string("Code " + x + " : BusVoltLow");
+        case 30: return std::string("Code " + x + " : BatCapacityLow1");
+        case 31: return std::string("Code " + x + " : BatCapacityLow2");
+        case 32: return std::string("Code " + x + " : BatCapacityLowStop");
+        case 58: return std::string("Code " + x + " : BMSComErr");
+        case 59: return std::string("Code " + x + " : BMSErr");
+        case 60: return std::string("Code " + x + " : BMSUnderTem");
+        case 61: return std::string("Code " + x + " : BMSOverTem");
+        case 62: return std::string("Code " + x + " : BMSOverCur");
+        case 63: return std::string("Code " + x + " : BMSUnderVolt");
+        case 64: return std::string("Code " + x + " : BMSOverVolt");
+        default: return std::string("No Error");
+      }      
+      return x;
 
 select:
   # Inverter Settings
